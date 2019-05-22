@@ -1,0 +1,27 @@
+{
+  "name": "ioe",
+  "version": "1.0.0",
+  "description": "Centralized for internet of energy ",
+  "main": "app.js",
+  "scripts": {
+    "test": "ioe"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akilan1999/Centralized_IOE.git"
+  },
+  "keywords": [
+    "IOE"
+  ],
+  "author": "Akilan Selvacoumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Akilan1999/Centralized_IOE/issues"
+  },
+  "homepage": "https://github.com/Akilan1999/Centralized_IOE#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.17.0",
+    "path": "^0.12.7"
+  }
+}
