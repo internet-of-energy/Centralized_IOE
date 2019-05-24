@@ -148,60 +148,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <% for(var i=0; i < sellers.length; i++){ %>
                                                 <tr>
-                                                    <td class="serial">1.</td>
-                                                    <td> Akilan Selvacoumar </td>
-                                                    <td>  <span class="name"> 0.50 $</span> </td>
-                                                    <td> <span class="product">40</span> </td>
+                                                    <td class="serial"><%= i+1 %></td>
+                                                    <td> <%= sellers[i].name %> </td>
+                                                    <td> <%= sellers[i].Cost_per_KwH %> $</td>
+                                                    <td> <%= sellers[i].Total_KwH %></td>
                                                     <td>
                                                         <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#largeModal">Buy</button>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td class="serial">2.</td>
-                                                    <td> Akilan Selvacoumar </td>
-                                                    <td>  <span class="name"> 0.50 $</span> </td>
-                                                    <td> <span class="product">40</span> </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#largeModal">Buy</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="serial">3.</td>
-                                                    <td> Akilan Selvacoumar </td>
-                                                    <td>  <span class="name"> 0.50 $</span> </td>
-                                                    <td> <span class="product">40</span> </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#largeModal">Buy</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="serial">3.</td>
-                                                    <td> Akilan Selvacoumar </td>
-                                                    <td>  <span class="name"> 0.50 $</span> </td>
-                                                    <td> <span class="product">40</span> </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#largeModal">Buy</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="serial">3.</td>
-                                                    <td> Akilan Selvacoumar </td>
-                                                    <td>  <span class="name"> 0.50 $</span> </td>
-                                                    <td> <span class="product">40</span> </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#largeModal">Buy</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="serial">3.</td>
-                                                    <td> Akilan Selvacoumar </td>
-                                                    <td>  <span class="name"> 0.50 $</span> </td>
-                                                    <td> <span class="product">40</span> </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#largeModal">Buy</button>
-                                                    </td>
-                                                </tr>
+                                                <% } %>
                                             </tbody>
                                         </table>
                                     </div> <!-- /.table-stats -->
@@ -247,7 +204,7 @@
                                       <div class="card-body">
                                           <div class="mx-auto d-block">
                                               <img class=" mx-auto d-block" src="https://www.dubaiapprovals.com/wp-content/uploads/2018/11/dewa-960x675.png" alt="Card image cap">
-                                              <h5 class="text-sm-center mt-2 mb-1">Buy From Government</h5>
+                                              <h5 class="text-sm-center mt-2 mb-1">Buy From Government(Under Developement)</h5>
                                               <div class="location text-sm-center"><i class="fa fa-map-marker"></i> Dubai , UAE</div>
                                           </div>
                                           <hr>
@@ -255,7 +212,7 @@
                                               <h2>$1 per KwH</h2>
                                           </div>
                                       </div>
-                                      <button type="button" class="btn btn-success btn-lg active" data-toggle="modal" data-target="#largeModal">Buy</button>
+                                      <!--<button type="button" class="btn btn-success btn-lg active" data-toggle="modal" data-target="#largeModal">Buy</button>-->
                                   </div>
                                 </div>
                             </div>

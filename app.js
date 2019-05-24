@@ -2,11 +2,6 @@
 
 var port = process.env.PORT || 8003;
 
-
-
-
-var DB_config = require('./config/database.js');
-
 //Express imports
 var express = require('express');
 var path = require('path');
