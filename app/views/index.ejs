@@ -226,13 +226,18 @@
                       <div class="card">
                           <div class="card-header"><strong>Sell</strong><small> Energy</small></div>
                           <div class="card-body card-block">
-                              <div class="form-group"><label for="Kwh" class=" form-control-label">Amount in KwH</label><input type="text" id="" placeholder="ex: 50" class="form-control"></div>
-                              <div class="form-group"><label for="Cost" class=" form-control-label">Cost per KwH</label><input type="text" id="" placeholder="ex: 0.50" class="form-control"></div>
+                            <form method="POST" action="/sell">
+                              <!-- Hidden input to store user id from session -->
+                              <input type="hidden" id="user_id" name="user_id"  value="1" class="form-control"/>
+
+                              <div class="form-group"><label for="Kwh" class=" form-control-label">Amount in KwH</label><input type="text" id="Amt_KwH" name="Amt_KwH" placeholder="ex: 50" class="form-control"></div>
+                              <div class="form-group"><label for="Cost" class=" form-control-label">Cost per KwH</label><input type="text" id="Cost_per_KwH" name="Cost_per_KwH" placeholder="ex: 0.50" class="form-control"></div>
                               <div class="row form-group">
                                 <div class="col col-md-3"><label for="select" class=" form-control-label">Select Battery</label></div>
                                 <div class="col-12 col-md-9">
-                                    <select name="select" id="select" class="form-control">
-                                        <option value="0">Battery 1</option>
+                                    <select name="select_battery" id="select" class="form-control">
+                                        <option value="Battery 1">Battery 1</option>
+                                        <option value="Battery 2">Battery 2</option>
                                     </select>
                                 </div>
                               </div>
@@ -240,6 +245,7 @@
                                   <span id="payment-button-amount">Sell</span>
                                   <span id="payment-button-sending" style="display:none;">Sending…</span>
                               </button>
+                            </form>
                           </div>
                       </div>
                     </div>
@@ -291,6 +297,9 @@
     <!-- /#right-panel -->
 
     <!-- Scripts -->
+    <!--AJAX still under testing phase -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
@@ -319,7 +328,6 @@
 
     <!--Local Stuff-->
     <script>
-
     </script>
 </body>
 </html>
