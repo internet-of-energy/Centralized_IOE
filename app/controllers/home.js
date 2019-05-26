@@ -5,16 +5,23 @@ exports.home = function(req, res) {
 
 	console.log(req.session.username);
 
-	if(req.session.username != 'undefined'){
+	var session = {
+		'user_id':req.session.user_id,
+		'username':req.session.username
+	};
 
+	if(req.session.username != null){
+
+  //runs the sql query
 	DB_config.connection.query("SELECT users.name as name,Total_KwH,Cost_per_KwH FROM users,sellers" +
 	" where users.user_id = sellers.seller_id order by Cost_per_KwH limit 10;",
 	function (err, result, fields) {
 
     if (err) throw err;
-		res.render('index.ejs',{sellers:result});
+		//renders index page with certain data passed
+		res.render('index.ejs',{sellers:result,session:session});
   });
-	  
+
   }
   else{
 	 res.redirect('/login');

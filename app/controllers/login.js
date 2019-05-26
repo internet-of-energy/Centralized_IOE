@@ -13,7 +13,7 @@ exports.check = function(req, res) {
 	if (Username && Password) {
 		DB_config.connection.query('SELECT * FROM users WHERE username = ? AND password = ?', [Username, Password], function(error, result, fields) {
 			if (result.length > 0) {
-				
+
 				req.session.user_id = result[0].user_id;
 				req.session.username = result[0].username;
 
@@ -27,4 +27,10 @@ exports.check = function(req, res) {
 		res.render('login.ejs',{error:"Pls enter username and password"});
 		res.end();
 	}
+}
+
+//destroys session for logout
+exports.logout = function(req, res) {
+	req.session.destroy();
+	res.redirect('/login');
 }
