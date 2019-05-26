@@ -33,6 +33,7 @@
             <div class="login-content">
                 <div class="login-logo">
                     <a href="index.html">
+                        <!--Insert your logo here-->
                         <img class="align-content" src="" alt="">
                     </a>
                 </div>
@@ -67,6 +68,11 @@
                         </div>
                     </form>
                 </div>
+                <% if(typeof error !== 'undefined' && error){ %>
+                <div class="alert alert-danger" role="alert">
+                    <%= error %>
+                </div>
+                <% } %>
             </div>
         </div>
     </div>

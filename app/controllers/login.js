@@ -5,16 +5,16 @@ exports.login = function(req, res) {
 	res.render('login.ejs');
 }
 
+//Login validation 
 exports.check = function(req, res) {
 	var Username = req.body.Username;
 	var Password = req.body.Password;
 
 	if (Username && Password) {
-		connection.query('SELECT * FROM user WHERE username = ? AND password = ?', [Username, Password], function(error, result, fields) {
-
-			if (results.length > 0) {
+		DB_config.connection.query('SELECT * FROM users WHERE username = ? AND password = ?', [Username, Password], function(error, result, fields) {
+			if (result.length > 0) {
 				req.session.user_id = result.user_id;
-				req.session.username = username;
+				req.session.username = result.username;
 
 				res.redirect('/home');
 			} else {
