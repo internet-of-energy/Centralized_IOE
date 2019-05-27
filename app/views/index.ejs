@@ -37,10 +37,10 @@
                     </li>
 
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <!--<i class="menu-icon fa fa-glass"></i>-->Future feature</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <!--<i class="menu-icon fa fa-glass"></i>-->Transactions</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <!--<li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Login</a></li>
-                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Register</a></li>
+                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Login</a></li>
+                            <!--<li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Register</a></li>
                             <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Forget Pass</a></li>-->
                         </ul>
                     </li>
@@ -71,10 +71,6 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
-
                             <a class="nav-link" href="/logout"><i class="fa fa-power -off"></i>Logout</a>
                         </div>
                     </div>
@@ -89,6 +85,7 @@
             <div class="animated fadeIn">
                 <!-- Widgets  -->
                 <div class="row">
+                  <% for(var i=0; i < battery.length; i++){ %>
                     <div class="col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body">
@@ -98,14 +95,21 @@
                                     </div>-->
                                     <div class="">
                                         <div class="text-left dib">
-                                            <div class="stat-text"> <span class="count">70</span>%</div>
-                                            <div class="stat-heading">Power in Battery 1</div>
+                                          <%
+                                          var per = (battery[i].Current_power/battery[i].Storage) * 100;
+                                          %>
+                                            <div class="stat-text"> <span class="count"><%= per %></span>%</div>
+                                            <div class="stat-heading"><span class="box-title"><%= battery[i].model_no %></span></div>
+                                            <div class="stat-heading"><span class="box-title">Total Storage : </span> <%= battery[i].Storage %></div>
+                                            <!-- Current Power To be done in AJAX form in the future -->
+                                            <div class="stat-heading"><span class="box-title">Current Power : </span> <%= battery[i].Current_power %></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <% } %>
 
                     <div class="col-lg-3 col-md-6">
                         <div class="card">
@@ -116,7 +120,7 @@
                                     </div>-->
                                     <div class="">
                                         <div class="text-left dib">
-                                            <div class="stat-text"><span class="count">20</span></div>
+                                            <div class="stat-text"><span class="count"><%= sellers.length %></span></div>
                                             <div class="stat-heading">No of power sellers in grid</div>
                                         </div>
                                     </div>
@@ -237,8 +241,9 @@
                                 <div class="col col-md-3"><label for="select" class=" form-control-label">Select Battery</label></div>
                                 <div class="col-12 col-md-9">
                                     <select name="select_battery" id="select" class="form-control">
-                                        <option value="Battery 1">Battery 1</option>
-                                        <option value="Battery 2">Battery 2</option>
+                                      <% for(var i = 0; i < battery.length; i++){ %>
+                                        <option value="<%= battery[i].model_no%>"><%= battery[i].model_no%></option>
+                                      <% } %>
                                     </select>
                                 </div>
                               </div>
