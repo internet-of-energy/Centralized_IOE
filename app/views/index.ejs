@@ -82,11 +82,11 @@
                                                 <% for(var i=0; i < sellers.length; i++){ %>
                                                 <tr>
                                                     <td class="serial"><%= i+1 %></td>
-                                                    <td> <%= sellers[i].name %> </td>
-                                                    <td> <%= sellers[i].Cost_per_KwH %> $</td>
-                                                    <td> <%= sellers[i].Total_KwH %></td>
+                                                    <td id="<%= i+1 %>name"> <%= sellers[i].name %> </td>
+                                                    <td id="<%= i+1 %>Cost_per_KwH"> <%= sellers[i].Cost_per_KwH %> $</td>
+                                                    <td id="<%= i+1 %>Total_KwH"> <%= sellers[i].Total_KwH %></td>
                                                     <td>
-                                                        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#largeModal">Buy</button>
+                                                        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#largeModal" onclick="buy(<%=i %>)">Buy</button>
                                                     </td>
                                                 </tr>
                                                 <% } %>
@@ -109,20 +109,20 @@
                                     <div class="modal-body">
                                       <div class="card">
                                           <div class="card-body card-block">
-                                              <div class="form-group"><label for="Kwh" class=" form-control-label">Amount in KwH</label><input type="text" id="" placeholder="Max limit here is 50 KwH" class="form-control"></div>
-                                              <div class="form-group"><label for="Cost" class=" form-control-label">Cost per KwH</label><input type="text" id="" placeholder="ex: 0.50" class="form-control"></div>
-                                              <div class="row form-group">
-
-                                                <div class="col-12 col-md-9">
-
-                                                </div>
-                                              </div>
+                                            <form method="POST" action="/buy">
+                                            <!-- Hidden input to store user id from session -->
+                                              <input type="hidden" id="seller_id" name="Seller_id" value="" class="form-control"/>
+                                              <input type="hidden" id="sell_id" name="Sell_id" value="" class="form-control"/>
+                                              <div class="form-group"><label for="Kwh" class=" form-control-label">Amount in KwH</label><input type="text" id="Amt_KwH_modal" name="Amt_KwH" placeholder="Max limit here is 50 KwH" class="form-control" onkeyup="total_cost()"></div>
+                                              <div class="form-group"><label for="Cost" class=" form-control-label">Cost per KwH</label><input type="text" id="Cost_per_KwH_modal" name="Cost_per_KwH" placeholder="ex: 0.50" class="form-control" value="0" readonly></div>
+                                              <div class="form-group"><label for="Total_cost" class=" form-control-label">Total_cost</label><input type="text" id="Total_cost" placeholder="ex: 0.50" class="form-control" value="0" readonly></div>
+                                              <button type="submit" class="btn btn-success">Buy</button>
+                                             </form>
                                           </div>
                                       </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-success">Buy</button>
                                     </div>
                                 </div>
                             </div>
@@ -158,11 +158,9 @@
                           <div class="card-header"><strong>Sell</strong><small> Energy</small></div>
                           <div class="card-body card-block">
                             <form method="POST" action="/sell">
-                              <!-- Hidden input to store user id from session -->
-                              <input type="hidden" id="user_id" name="user_id"  value="1" class="form-control"/>
 
-                              <div class="form-group"><label for="Kwh" class=" form-control-label">Amount in KwH</label><input type="text" id="Amt_KwH" name="Amt_KwH" placeholder="ex: 50" class="form-control"></div>
-                              <div class="form-group"><label for="Cost" class=" form-control-label">Cost per KwH</label><input type="text" id="Cost_per_KwH" name="Cost_per_KwH" placeholder="ex: 0.50" class="form-control"></div>
+                              <div class="form-group"><label for="Kwh" class=" form-control-label">Amount in KwH</label><input type="text" id="Amt_KwH" name="Amt_KwH" placeholder="ex: 50 in KwH" class="form-control"></div>
+                              <div class="form-group"><label for="Cost" class=" form-control-label">Cost per KwH</label><input type="text" id="Cost_per_KwH" name="Cost_per_KwH" placeholder="ex: 0.50 in $" class="form-control"></div>
                               <div class="row form-group">
                                 <div class="col col-md-3"><label for="select" class=" form-control-label">Select Battery</label></div>
                                 <div class="col-12 col-md-9">
@@ -208,5 +206,29 @@
           <%- include footer/credentials.ejs %>
     </div>
     <!-- /#right-panel -->
+    <!-- Local Script-->
+    <script>
+
+    //Sellers POST JSON converted to client side JS
+    var sellers =<%-JSON.stringify(sellers)%>
+    //Function to transfer data to model
+     function buy(id){
+       document.getElementById("Cost_per_KwH_modal").value = sellers[id].Cost_per_KwH;
+       document.getElementById("seller_id").value = sellers[id].seller_id;
+       document.getElementById("sell_id").value = sellers[id].sell_id;
+
+       //Sets the default buy and sell to zero every time a new modal is open
+      // if always default set to zero (document.getElementById("Amt_KwH_modal").value = 0;)
+       total_cost();
+     }
+
+    // Finds total by getting Cost per KwH and Amount per KwH
+     function total_cost(){
+      var total = document.getElementById("Cost_per_KwH_modal").value * document.getElementById("Amt_KwH_modal").value;
+      //rounds of to 2 decimal places
+      total = Math.round(total * 100)/100;
+      document.getElementById("Total_cost").value = total;
+     }
+    </script>
 
 <%- include footer/footer.ejs %>

@@ -3,7 +3,6 @@ var DB_config = require('../../config/database.js');
 //This shows the cheapest electrictiy avaliable in the market
 exports.home = function(req, res) {
 
-	console.log(req.session.username);
 
 	var session = {
 		'user_id':req.session.user_id,
@@ -14,7 +13,7 @@ exports.home = function(req, res) {
 	if(req.session.username != null){
 
   //Query 1 to display top 10 cheapest per KwH
-	DB_config.connection.query("SELECT users.name as name,Total_KwH,Cost_per_KwH FROM users,sellers" +
+	DB_config.connection.query("SELECT sell_id,seller_id,users.name as name,Total_KwH,Cost_per_KwH FROM users,sellers" +
 	" where users.user_id = sellers.seller_id order by Cost_per_KwH limit 10;",
 	function (err, result, fields) {
     if (err) throw err;
@@ -51,6 +50,84 @@ exports.sell = function(req, res) {
  		//renders index page with certain data passed
  		res.redirect('/home');
  	 });
+
+
+}
+
+//This allows customers to buy from our grid
+exports.buy = function(req, res) {
+
+	var session = {
+		'user_id':req.session.user_id,
+		'username':req.session.username
+	};
+
+	//post request for buying
+	var Amt_KwH = req.body.Amt_KwH;
+	var Cost_per_KwH = req.body.Cost_per_KwH;
+	var Seller_id = req.body.Seller_id;
+	var Sell_id = req.body.Sell_id;
+
+	var total = Math.round((Amt_KwH * Cost_per_KwH)*100)/100; //Rounds the total to 2 decimal places
+	var date = new Date().toISOString().slice(0, 19).replace('T', ' '); //Converts date to sql date format
+
+	//Inserts the information to the bill
+	DB_config.connection.query("insert into bills(buyer_id,seller_id,No_of_KwH,Cost_per_KwH,b_date) values(?,?,?,?,?)",[session.user_id,Seller_id,Amt_KwH,Cost_per_KwH,date],
+	function (err, result, fields) {
+
+	 if (err) throw err;
+	 //updates seller information
+	 DB_config.connection.query("update sellers set Total_KwH = Total_KwH - ? where sell_id = ?",[Amt_KwH,Sell_id],
+ 	 function (err_update, result_update, fields_update) {
+
+ 	  if (err_update) throw err_update;
+	 //Gets informations about Total_KwH seller
+	 DB_config.connection.query("select Total_KwH from sellers where sell_id = ?",[Sell_id],
+	 function (err_query, result_query, fields_query) {
+
+		if (err_query) throw err_query;
+
+		//if the KwH is equal to zero then it deletes the entire row
+	  if (result_query[0].Total_KwH == Amt_KwH){
+			DB_config.connection.query("delete from sellers where sell_id = ?",[Sell_id],
+	 	  function (err_query, result_query, fields_query) {
+	 		  if (err_query) throw err_query;
+			    res.redirect('/home');
+	 	});
+		}
+		else{
+	 res.redirect('/home');
+    }
+	});
+ 	});
+	});
+
+
+}
+
+//To view bills
+exports.bills = function(req, res) {
+
+	var session = {
+	 'user_id':req.session.user_id,
+	 'username':req.session.username
+  };
+
+	if(req.session.username != null){
+
+		DB_config.connection.query("select bill_no,name, No_of_KwH,Cost_per_KwH,b_date from bills,users where seller_id = user_id AND buyer_id = ? order by b_date desc",[session.user_id],
+		function (err, result, fields) {
+
+			if (err) throw err;
+			//renders index page with certain data passed
+		  res.render('bills.ejs',{session:session,bills:result});
+		});
+
+	}
+	else{
+		 res.redirect('/login');
+	}
+
 
 
 }

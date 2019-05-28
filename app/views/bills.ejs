@@ -1,0 +1,87 @@
+<%- include header/header.ejs %>
+
+<body>
+   <%- include header/left_panel.ejs %>
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        <%- include header/top_nav.ejs %>
+        <!-- Content -->
+        <div class="content">
+            <!-- Animated -->
+            <div class="animated fadeIn">
+
+                <div class="clearfix"></div>
+                <!-- Orders -->
+                <div class="orders">
+                    <div class="row">
+                        <div class="col-xl-10">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="box-title">Bills</h4>
+                                </div>
+                                <div class="card-body--">
+                                    <div class="table-stats order-table ov-h">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="serial">Bill_id</th>
+                                                    <th>Seller Name</th>
+                                                    <th>No of KwH</th>
+                                                    <th>Cost per KwH</th>
+                                                    <th>Total Cost</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for(var i=0; i < bills.length; i++){ %>
+                                                <tr>
+                                                    <td class="serial"><%= bills[i].bill_no %></td>
+                                                    <td><%= bills[i].name %></td>
+                                                    <td><%= bills[i].No_of_KwH %></td>
+                                                    <td><%= bills[i].Cost_per_KwH %></td>
+                                                    <td><%= Math.round((bills[i].No_of_KwH * bills[i].Cost_per_KwH)*100)/100 %></td>
+                                                    <td><%= bills[i].b_date %></td>
+                                                </tr>
+                                                <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div> <!-- /.table-stats -->
+                                </div>
+                            </div> <!-- /.card -->
+                        </div>  <!-- /.col-lg-8 -->
+
+
+                    </div>
+                </div>
+                <!-- /.orders -->
+                <!-- To Do and Live Chat -->
+                <div class="row">
+
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
+                <!-- -->
+                <div class="row">
+                    <div class="col-md-12 col-lg-4">
+
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- .animated -->
+        </div>
+        <!-- /.content -->
+        <div class="clearfix"></div>
+          <%- include footer/credentials.ejs %>
+    </div>
+    <!-- /#right-panel -->
+
+<%- include footer/footer.ejs %>
