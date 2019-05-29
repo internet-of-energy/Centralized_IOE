@@ -52,4 +52,4 @@ URL: http://localhost:8003
 
 If successful this should be your home page
 
-[Home page](/public/images/screenshot/homepage.png =250x250)
+[Home page](/public/images/screenshot/homepage.png | width=100)
