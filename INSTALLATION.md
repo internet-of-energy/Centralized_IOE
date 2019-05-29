@@ -56,4 +56,5 @@ If successful this should be your home page
 
 ### SQL Er-Diagram
 Note : The password is not hashed.
+<br>
 <img src="./public/images/er_diagram/er_diagram.png" width="500" height="500">
