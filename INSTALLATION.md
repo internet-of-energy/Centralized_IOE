@@ -52,4 +52,4 @@ URL: http://localhost:8003
 
 If successful this should be your home page
 
-<img src="./public/images/screenshot/homepage.png" width="1000" height="1000">
+<img src="./public/images/screenshot/homepage.png" width="1000" height="500">
