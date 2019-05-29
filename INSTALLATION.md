@@ -52,4 +52,4 @@ URL: http://localhost:8003
 
 If successful this should be your home page
 
-[GitHub Logo](/public/images/screenshot/homepage.png)
+[Home page](/public/images/screenshot/homepage.png)
