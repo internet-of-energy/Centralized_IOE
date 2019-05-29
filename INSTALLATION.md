@@ -8,7 +8,7 @@ Navigate to the directory
 ```bash
 cd Centralized_IOE/
 ```
-### Add you sql username and password
+### Add your sql username and password
 
 Navigate to config/database.js
 ```javascript
@@ -40,5 +40,16 @@ mysql> insert into users values(0,'<your name>','<your username>','<your passwor
 Ex: This is for adding batteries
 ```sql
 mysql> insert into battery_info values(0,2,'POWERWALL 1','Solar City',500,300);
-mysql> insert into battery_info(user_id,model_no, manufacturing_company,Storage,Current_power) values(0,2,'POWERWALL 2','Solar City',500,500);
+mysql> insert into battery_info(user_id,model_no, manufacturing_company,Storage,Current_power) values(2,'POWERWALL 2','Solar City',500,500);
 ```
+### Start server
+```sql
+node app.js
+```
+URL: http://localhost:8003
+
+### Login with the username and password in the DB.
+
+If successful this should be your home page
+
+[GitHub Logo](/public/images/screenshot/homepage.png)
