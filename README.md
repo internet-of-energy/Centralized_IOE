@@ -1,6 +1,5 @@
 # Internet Of Energy
-<br>
-<br>
+
 ## THE AIM
 Our aim is to create an energy sharing platform that will be integrated into communities and will consequently result in effective usage of energy which can be sold at a reasonable price depending on demand.   
 
