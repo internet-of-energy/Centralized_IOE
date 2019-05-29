@@ -88,7 +88,7 @@ exports.buy = function(req, res) {
 		if (err_query) throw err_query;
 
 		//if the KwH is equal to zero then it deletes the entire row
-	  if (result_query[0].Total_KwH == Amt_KwH){
+	  if (result_query[0].Total_KwH === 0){
 			DB_config.connection.query("delete from sellers where sell_id = ?",[Sell_id],
 	 	  function (err_query, result_query, fields_query) {
 	 		  if (err_query) throw err_query;

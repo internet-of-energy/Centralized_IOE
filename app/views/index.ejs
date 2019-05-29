@@ -113,7 +113,8 @@
                                             <!-- Hidden input to store user id from session -->
                                               <input type="hidden" id="seller_id" name="Seller_id" value="" class="form-control"/>
                                               <input type="hidden" id="sell_id" name="Sell_id" value="" class="form-control"/>
-                                              <div class="form-group"><label for="Kwh" class=" form-control-label">Amount in KwH</label><input type="text" id="Amt_KwH_modal" name="Amt_KwH" placeholder="Max limit here is 50 KwH" class="form-control" onkeyup="total_cost()"></div>
+                                              <input type="hidden" id="KwH_amt_ava" name="KwH_amt_ava" value="" class="form-control"/>
+                                              <div class="form-group"><label for="Kwh" class=" form-control-label">Amount in KwH</label><input type="text" id="Amt_KwH_modal" name="Amt_KwH" placeholder="Enter in KwH" class="form-control" onkeyup="total_cost()"></div>
                                               <div class="form-group"><label for="Cost" class=" form-control-label">Cost per KwH</label><input type="text" id="Cost_per_KwH_modal" name="Cost_per_KwH" placeholder="ex: 0.50" class="form-control" value="0" readonly></div>
                                               <div class="form-group"><label for="Total_cost" class=" form-control-label">Total_cost</label><input type="text" id="Total_cost" placeholder="ex: 0.50" class="form-control" value="0" readonly></div>
                                               <button type="submit" class="btn btn-success">Buy</button>
@@ -135,7 +136,7 @@
                                       <div class="card-body">
                                           <div class="mx-auto d-block">
                                               <img class=" mx-auto d-block" src="https://www.dubaiapprovals.com/wp-content/uploads/2018/11/dewa-960x675.png" alt="Card image cap">
-                                              <h5 class="text-sm-center mt-2 mb-1">Buy From Government(Under Developement)</h5>
+                                              <h5 class="text-sm-center mt-2 mb-1">Buy From Government(Future Concept)</h5>
                                               <div class="location text-sm-center"><i class="fa fa-map-marker"></i> Dubai , UAE</div>
                                           </div>
                                           <hr>
@@ -216,6 +217,7 @@
        document.getElementById("Cost_per_KwH_modal").value = sellers[id].Cost_per_KwH;
        document.getElementById("seller_id").value = sellers[id].seller_id;
        document.getElementById("sell_id").value = sellers[id].sell_id;
+       document.getElementById("KwH_amt_ava").value = sellers[id].Total_KwH;
 
        //Sets the default buy and sell to zero every time a new modal is open
       // if always default set to zero (document.getElementById("Amt_KwH_modal").value = 0;)
@@ -227,7 +229,16 @@
       var total = document.getElementById("Cost_per_KwH_modal").value * document.getElementById("Amt_KwH_modal").value;
       //rounds of to 2 decimal places
       total = Math.round(total * 100)/100;
+      var Amt_KwH_modal = document.getElementById("Amt_KwH_modal").value;
+      var KwH_amt_ava = document.getElementById("KwH_amt_ava").value;
+
+      //converts both variables to number type
+      if(Number(Amt_KwH_modal) > Number(KwH_amt_ava)){
+       document.getElementById("Total_cost").value = "Cannot order more than "+ KwH_amt_ava + " KwH";
+      }
+      else{
       document.getElementById("Total_cost").value = total;
+      }
      }
     </script>
 
