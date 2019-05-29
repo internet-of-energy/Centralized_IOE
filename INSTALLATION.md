@@ -53,3 +53,6 @@ URL: http://localhost:8003
 If successful this should be your home page
 
 <img src="./public/images/screenshot/homepage.png" width="1000" height="500">
+
+### SQL Er-Diagram
+<img src="./public/images/er_diagram/er_diagram.png" width="1000" height="500">
