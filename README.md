@@ -1,6 +1,6 @@
 # Internet Of Energy
 
-![GitHub Logo](https://cdn-images-1.medium.com/max/1200/1*2E2WSE5wGMPv1pf8xruoKg.png)
+![GitHub Logo](https://p2pconnecting.files.wordpress.com/2016/10/cropped-cropped-hires1.jpg)
 
 ## THE AIM
 Our aim is to create an energy sharing platform that will be integrated into communities and will consequently result in effective usage of energy which can be sold at a reasonable price depending on demand.   
