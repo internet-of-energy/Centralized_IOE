@@ -1,6 +1,11 @@
 # Procedure to install and run the Code
 
-### Clone the repo
+## 1. Requirements
+1. Node js
+2. NPM
+3. MySQL
+
+### 2. Clone the repo
 ```bash
 git clone https://github.com/Akilan1999/Centralized_IOE.git
 ```
@@ -8,7 +13,7 @@ Navigate to the directory
 ```bash
 cd Centralized_IOE/
 ```
-### Add your sql username and password
+### 3. Add your sql username and password
 
 Navigate to config/database.js
 ```javascript
@@ -20,7 +25,7 @@ var connection = mysql.createConnection({
 });
 ```
 
-### Adding the sql database to your localhost
+### 4. Adding the sql database to your localhost
 
 1. Login to SQL
 ```bash
@@ -42,19 +47,19 @@ Ex: This is for adding batteries
 mysql> insert into battery_info values(0,2,'POWERWALL 1','Solar City',500,300);
 mysql> insert into battery_info(user_id,model_no, manufacturing_company,Storage,Current_power) values(2,'POWERWALL 2','Solar City',500,500);
 ```
-### Start server
+### 5. Start server
 ```sql
 node app.js
 ```
 URL: http://localhost:8003
 
-### Login with the username and password in the DB.
+### 6. Login with the username and password in the DB.
 
 If successful this should be your home page
 
 <img src="./public/images/screenshot/homepage.png" width="1000" height="500">
 
-### SQL Er-Diagram
+### 7. SQL Er-Diagram
 Note : The password is not hashed.
 <br>
 <br>
