@@ -92,7 +92,7 @@ exports.buy = function(req, res) {
 			DB_config.connection.query("delete from sellers where sell_id = ?",[Sell_id],
 	 	  function (err_query, result_query, fields_query) {
 	 		  if (err_query) throw err_query;
-			    res.redirect('/home');
+          res.redirect('/home');
 	 	});
 		}
 		else{
@@ -127,6 +127,9 @@ exports.bills = function(req, res) {
 	else{
 		 res.redirect('/login');
 	}
+
+	//Local functions that cannot be exported
+
 
 
 
