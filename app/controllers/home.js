@@ -98,7 +98,7 @@ exports.buy = function(req, res) {
 		else{
 	 res.redirect('/home');
     }
-	});
+	}); 
  	});
 	});
 
