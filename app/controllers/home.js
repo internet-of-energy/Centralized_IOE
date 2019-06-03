@@ -1,4 +1,6 @@
 var DB_config = require('../../config/database.js');
+//This is used for external API's
+var request = require('request');
 
 //This shows the cheapest electrictiy avaliable in the market
 exports.home = function(req, res) {
@@ -67,6 +69,7 @@ exports.buy = function(req, res) {
 	var Cost_per_KwH = req.body.Cost_per_KwH;
 	var Seller_id = req.body.Seller_id;
 	var Sell_id = req.body.Sell_id;
+	var Battery_id = req.body.select_battery;
 
 	var total = Math.round((Amt_KwH * Cost_per_KwH)*100)/100; //Rounds the total to 2 decimal places
 	var date = new Date().toISOString().slice(0, 19).replace('T', ' '); //Converts date to sql date format
@@ -82,16 +85,19 @@ exports.buy = function(req, res) {
 
  	  if (err_update) throw err_update;
 	 //Gets informations about Total_KwH seller
-	 DB_config.connection.query("select Total_KwH from sellers where sell_id = ?",[Sell_id],
+	 DB_config.connection.query("select * from sellers where sell_id = ?",[Sell_id],
 	 function (err_query, result_query, fields_query) {
 
 		if (err_query) throw err_query;
 
 		//if the KwH is equal to zero then it deletes the entire row
+		transfer_electricity(result_query[0].battery_id,Battery_id,Amt_KwH);
 	  if (result_query[0].Total_KwH === 0){
 			DB_config.connection.query("delete from sellers where sell_id = ?",[Sell_id],
 	 	  function (err_query, result_query, fields_query) {
 	 		  if (err_query) throw err_query;
+
+				  //This method calls the API to control relays
           res.redirect('/home');
 	 	});
 		}
@@ -128,9 +134,24 @@ exports.bills = function(req, res) {
 		 res.redirect('/login');
 	}
 
-	//Local functions that cannot be exported
+}
 
+//Local functions that cannot be exported
 
-
-
+function transfer_electricity(tk_batt,sn_batt,transfer_energy){
+	request({
+	uri: 'http://192.168.0.112:8003/transfer',
+	qs: {
+		energy_req: transfer_energy,
+		tk_batt: tk_batt,
+		sn_batt: sn_batt
+	},
+	function(error, response, body) {
+		if (!error && response.statusCode === 200) {
+			return response;
+		} else {
+			return error;
+		}
+	}
+});
 }

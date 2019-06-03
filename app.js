@@ -9,6 +9,7 @@ var express = require('express');
 var session = require('express-session');
 var path = require('path');
 
+
 //Usage of express
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
