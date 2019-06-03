@@ -117,6 +117,14 @@
                                               <div class="form-group"><label for="Kwh" class=" form-control-label">Amount in KwH</label><input type="text" id="Amt_KwH_modal" name="Amt_KwH" placeholder="Enter in KwH" class="form-control" onkeyup="total_cost()"></div>
                                               <div class="form-group"><label for="Cost" class=" form-control-label">Cost per KwH</label><input type="text" id="Cost_per_KwH_modal" name="Cost_per_KwH" placeholder="ex: 0.50" class="form-control" value="0" readonly></div>
                                               <div class="form-group"><label for="Total_cost" class=" form-control-label">Total_cost</label><input type="text" id="Total_cost" placeholder="ex: 0.50" class="form-control" value="0" readonly></div>
+                                              <div class="form-group"><label for="select" class=" form-control-label">Select Battery</label></div>
+                                              <div class="form-group">
+                                                  <select name="select_battery" id="select" class="form-control">
+                                                    <% for(var i = 0; i < battery.length; i++){ %>
+                                                      <option value="<%= battery[i].battery_id%>"><%= battery[i].model_no%></option>
+                                                    <% } %>
+                                                  </select>
+                                              </div>
                                               <button type="submit" class="btn btn-success">Buy</button>
                                              </form>
                                           </div>
@@ -167,7 +175,7 @@
                                 <div class="col-12 col-md-9">
                                     <select name="select_battery" id="select" class="form-control">
                                       <% for(var i = 0; i < battery.length; i++){ %>
-                                        <option value="<%= battery[i].model_no%>"><%= battery[i].model_no%></option>
+                                        <option value="<%= battery[i].battery_id%>"><%= battery[i].model_no%></option>
                                       <% } %>
                                     </select>
                                 </div>

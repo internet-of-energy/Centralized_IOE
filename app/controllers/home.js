@@ -40,10 +40,10 @@ exports.sell = function(req, res) {
 	//post request of sell
    var Amt_KwH = req.body.Amt_KwH;
 	 var Cost_per_KwH = req.body.Cost_per_KwH;
-	 var Battery = req.body.select_battery;
+	 var Battery_id = req.body.select_battery;
 	 var User_id = req.session.user_id;
 
-	 DB_config.connection.query("insert into sellers(seller_id,Total_KwH,Cost_per_KwH) values(?,?,?)",[User_id,Amt_KwH,Cost_per_KwH],
+	 DB_config.connection.query("insert into sellers(seller_id,Total_KwH,Cost_per_KwH,battery_id) values(?,?,?,?)",[User_id,Amt_KwH,Cost_per_KwH,Battery_id],
  	 function (err, result, fields) {
 
  		if (err) throw err;
@@ -98,7 +98,7 @@ exports.buy = function(req, res) {
 		else{
 	 res.redirect('/home');
     }
-	}); 
+	});
  	});
 	});
 
