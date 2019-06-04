@@ -1,7 +1,7 @@
 # Internet Of Energy
 
 Note : This layer is connected with the physical layer the updated version of the readme file is
-not available yet.
+not available yet. 
 
 ![GitHub Logo](http://www.networkrevolution.co.uk/wp-content/uploads/2014/04/img-smartgrid-problem.png)
 
