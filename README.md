@@ -1,6 +1,9 @@
 # Internet Of Energy
 
-![GitHub Logo](https://p2pconnecting.files.wordpress.com/2016/10/cropped-cropped-hires1.jpg)
+Note : This layer is connected with the physical layer the updated version of the readme file is
+not available yet. 
+
+![GitHub Logo](http://www.networkrevolution.co.uk/wp-content/uploads/2014/04/img-smartgrid-problem.png)
 
 ## THE AIM
 Our aim is to create an energy sharing platform that will be integrated into communities and will consequently result in effective usage of energy which can be sold at a reasonable price depending on demand.   

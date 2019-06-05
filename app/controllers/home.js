@@ -1,4 +1,6 @@
 var DB_config = require('../../config/database.js');
+//This is used for external API's
+var request = require('request');
 
 //This shows the cheapest electrictiy avaliable in the market
 exports.home = function(req, res) {
@@ -40,10 +42,10 @@ exports.sell = function(req, res) {
 	//post request of sell
    var Amt_KwH = req.body.Amt_KwH;
 	 var Cost_per_KwH = req.body.Cost_per_KwH;
-	 var Battery = req.body.select_battery;
+	 var Battery_id = req.body.select_battery;
 	 var User_id = req.session.user_id;
 
-	 DB_config.connection.query("insert into sellers(seller_id,Total_KwH,Cost_per_KwH) values(?,?,?)",[User_id,Amt_KwH,Cost_per_KwH],
+	 DB_config.connection.query("insert into sellers(seller_id,Total_KwH,Cost_per_KwH,battery_id) values(?,?,?,?)",[User_id,Amt_KwH,Cost_per_KwH,Battery_id],
  	 function (err, result, fields) {
 
  		if (err) throw err;
@@ -67,6 +69,7 @@ exports.buy = function(req, res) {
 	var Cost_per_KwH = req.body.Cost_per_KwH;
 	var Seller_id = req.body.Seller_id;
 	var Sell_id = req.body.Sell_id;
+	var Battery_id = req.body.select_battery;
 
 	var total = Math.round((Amt_KwH * Cost_per_KwH)*100)/100; //Rounds the total to 2 decimal places
 	var date = new Date().toISOString().slice(0, 19).replace('T', ' '); //Converts date to sql date format
@@ -82,16 +85,17 @@ exports.buy = function(req, res) {
 
  	  if (err_update) throw err_update;
 	 //Gets informations about Total_KwH seller
-	 DB_config.connection.query("select Total_KwH from sellers where sell_id = ?",[Sell_id],
+	 DB_config.connection.query("select * from sellers where sell_id = ?",[Sell_id],
 	 function (err_query, result_query, fields_query) {
 
 		if (err_query) throw err_query;
 
-		//if the KwH is equal to zero then it deletes the entire row
 	  if (result_query[0].Total_KwH === 0){
 			DB_config.connection.query("delete from sellers where sell_id = ?",[Sell_id],
 	 	  function (err_query, result_query, fields_query) {
 	 		  if (err_query) throw err_query;
+
+				  //This method calls the API to control relays
           res.redirect('/home');
 	 	});
 		}
@@ -128,9 +132,6 @@ exports.bills = function(req, res) {
 		 res.redirect('/login');
 	}
 
-	//Local functions that cannot be exported
-
-
-
-
 }
+
+//Local functions that cannot be exported
