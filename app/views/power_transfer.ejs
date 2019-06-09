@@ -14,61 +14,16 @@
                 <!-- Orders -->
                 <div class="col-lg-10">
                         <div class="card">
-                            <div class="card-body">
-                                <div class="progress-box progress-1">
-                                    <h4 class="por-title">From Akilan </h4>
-                                    <div class="por-txt">58.8 / 100 KwH (40%)</div>
-                                    <div class="progress mb-2" style="height: 7px;">
-                                        <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-box progress-1">
-                                    <h4 class="por-title">From Akilan </h4>
-                                    <div class="por-txt">58.8 / 100 KwH (40%)</div>
-                                    <div class="progress mb-2" style="height: 7px;">
-                                        <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <!--
-                                <div class="progress-box progress-2">
-                                    <h4 class="por-title">Unique Visitors</h4>
-                                    <div class="por-txt">29,658 Users (60%)</div>
-                                    <div class="progress mb-2" style="height: 5px;">
-                                        <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-box progress-2">
-                                    <h4 class="por-title">Targeted  Visitors</h4>
-                                    <div class="por-txt">99,658 Users (90%)</div>
-                                    <div class="progress mb-2" style="height: 5px;">
-                                        <div class="progress-bar bg-flat-color-4" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                -->
+                            <div class="card-body" id="latest_stat">
+
+
+
                             </div> <!-- /.card-body -->
                         </div>
                     </div>
                 <!-- /.orders -->
                 <!-- To Do and Live Chat -->
-                <div class="row">
 
-                    <div class="col-lg-6">
-
-                    </div>
-                </div>
-                <!-- -->
-                <div class="row">
-                    <div class="col-md-12 col-lg-4">
-
-                    </div>
-
-                    <div class="col-lg-4 col-md-6">
-
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-
-                    </div>
-                </div>
 
             </div>
             <!-- .animated -->
@@ -78,5 +33,39 @@
           <%- include footer/credentials.ejs %>
     </div>
     <!-- /#right-panel -->
+    <!-- Local Javascript -->
+    <script>
+
+        setInterval(function(){
+            $.ajax({ url: "/current_transactions", success: function(data){
+
+              $("#latest_stat").html("");
+
+             console.log(data.length);
+
+              if(data.length == 1 && data[0] == null || data.length == 0){
+              $("#latest_stat").append("<h3>No Current Transactions left</h3>");
+              }
+
+             else{
+             for(var i = 0; i < data.length; i++){
+
+               $("#latest_stat").append(`<div class="progress-box progress-1">
+                     <h4 class="por-title"></h4>
+                     <div class="por-txt">`+data[i].current_transfer+`/`+data[i].No_of_KwH+` KwH (`+data[i].percentage+`%)</div>
+                     <h1>`+data[i].time_left+`</h1>
+                     <p>hours left</p>
+                     <div class="progress mb-2" style="height: 7px;">
+                         <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: `+data[i].percentage+`%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                     </div>
+                 </div>`);
+             }
+           }
+            }, dataType: "json"});
+         }, 1000);
+
+
+
+    </script>
 
 <%- include footer/footer.ejs %>
