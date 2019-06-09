@@ -2,7 +2,7 @@
 
 ![GitHub Logo](http://www.networkrevolution.co.uk/wp-content/uploads/2014/04/img-smartgrid-problem.png)
 
-###Note:
+### Note:
 This is still in development the current database structure is not updated yet. For testing purpose please
 Download the first version.
 
