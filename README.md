@@ -1,7 +1,10 @@
 # Internet Of Energy
 
-
 ![GitHub Logo](http://www.networkrevolution.co.uk/wp-content/uploads/2014/04/img-smartgrid-problem.png)
+
+###Note:
+This is still in development the current database structure is not updated yet. For testing purpose please
+Download the first version.
 
 ## THE AIM
 Our aim is to create an energy sharing platform that will be integrated into communities and will consequently result in effective usage of energy which can be sold at a reasonable price depending on demand.   
