@@ -15,6 +15,9 @@ var battery = require('../app/controllers/battery');
   //Get Request to find out the current trnasactions happening
   app.get('/current_transactions',battery.current_transfer_JSON);
 
+  //Get Request for battery information
+  app.get('/battery_information',battery.battery_info);
+
   //Get request to logout as we are just deleting the session
   app.get('/logout',login.logout);
 

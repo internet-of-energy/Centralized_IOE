@@ -5,7 +5,8 @@ var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root', //DB username
   password: 'AKILAN1999', //DB password
-  database: 'shared_electricity'
+  database: 'shared_electricity',
+  multipleStatements: true
 });
 
 //Checks if the connection is succesful

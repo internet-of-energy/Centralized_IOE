@@ -5,6 +5,9 @@ var request = require('request');
 //This is used for Date and time.
 var moment = require('moment');
 
+
+
+/*------------ Renders the power_transfer page --------------------- */
 exports.current_transfer = function(req, res) {
 
 	var session = {
@@ -22,7 +25,8 @@ exports.current_transfer = function(req, res) {
 }
 
 
-//This is an API that informs the browser about the informations of the current electricity transfer taking place
+/*----------- This is an API that informs the browser about the informations of the current electricity transfer taking place--------------------- */
+
 exports.current_transfer_JSON = function(req, res) {
 
  //Gets the current session.
@@ -35,7 +39,6 @@ exports.current_transfer_JSON = function(req, res) {
    //Query to find nessary information about the current transactions (This query will have to be changed later).
 	 DB_config.connection.query("select * from current_transactions,bills,users where current_transactions.bill_no = bills.bill_no AND bills.buyer_id = users.user_id AND users.user_id = ?",
 	 [session.user_id],function (err, battery_info, fields) {
-
 
 	 if(battery_info.length == 0){
 		  var result = [];
@@ -70,11 +73,6 @@ exports.current_transfer_JSON = function(req, res) {
 		battery_info[i].percentage = percentage;
 		battery_info[i].current_transfer = Cur_KwH_transfer;
 		battery_info[i].time_left = getTimeInterval(current_time,battery_info[i].end_time);
-		 //console.log(username);
-	  //battery_info[i].seller_username = username;
-
-
-	  //console.log(battery_info);
   }
 }
     // Returns battery information
@@ -84,6 +82,28 @@ exports.current_transfer_JSON = function(req, res) {
 
 
 }
+
+/*------------ Gets the battery information --------------------- */
+
+exports.battery_info = function(req, res) {
+
+	var session = {
+		'user_id':req.session.user_id,
+		'username':req.session.username
+	};
+
+	DB_config.connection.query("select * from battery_info where user_id = ?;select battery_id,sum(Total_KwH) as Total_KwH  from (select * from sellers where seller_id = ?) as sellers group by battery_id;",[session.user_id,session.user_id],
+	function (err_battery, result_battery, fields_battery) {
+    console.log(result_battery);
+		if (err_battery) throw err_battery;
+		//renders index page with certain data passed
+		res.json(result_battery);
+	});
+
+}
+
+
+
 
 //Local Functions.
 
@@ -105,3 +125,9 @@ function getTimeInterval_seconds(startTime, endTime, lunchTime){
     interval.subtract(lunchTime, 'minutes');
     return minutes*60;
 }
+
+
+/*Takes parameters from GET request
+ var Energy_req = req.query.energy_req;
+ var Tk_batt = req.query.tk_batt;
+ var Sn_batt = req.query.sn_batt;*/
