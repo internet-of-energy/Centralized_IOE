@@ -194,7 +194,7 @@
            for(var i = 0; i < data.length; i++){
 
              var power_locked = data[1][i].Total_KwH;
-             var actual_power_left = data[0][i].Current_power - power_locked;
+             var actual_power_left = data[0][i].Current_power;
              var per = (actual_power_left/data[0][i].Storage) * 100;
 
              $("#battery_info").append(`<div class="col-lg-3 col-md-6">
@@ -226,7 +226,7 @@
            }
          }
           }, dataType: "json"});
-       }, 1000);
+       }, 100);
 
     //Sellers POST JSON converted to client side JS
     var sellers =<%-JSON.stringify(sellers)%>

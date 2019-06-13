@@ -1,6 +1,8 @@
 var DB_config = require('../../config/database.js');
 //This is used for external API's
 var request = require('request');
+//This is used for Date and time.
+var moment = require('moment');
 
 //This shows the cheapest electrictiy avaliable in the market
 exports.home = function(req, res) {
@@ -47,7 +49,12 @@ exports.sell = function(req, res) {
 
 	 DB_config.connection.query("insert into sellers(seller_id,Total_KwH,Cost_per_KwH,battery_id) values(?,?,?,?)",[User_id,Amt_KwH,Cost_per_KwH,Battery_id],
  	 function (err, result, fields) {
+		 DB_config.connection.query("update battery_info set current_power = current_power - ? where battery_id = ?",[Amt_KwH,Battery_id],
+	 	 function (err, result, fields) {
 
+	 		if (err) throw err;
+
+	 	 });
  		if (err) throw err;
  		//renders index page with certain data passed
  		res.redirect('/home');
@@ -89,6 +96,50 @@ exports.buy = function(req, res) {
 	 function (err_query, result_query, fields_query) {
 
 		if (err_query) throw err_query;
+
+         //Finds the MAX bill_no as the primary key is set on auto_increment
+				 DB_config.connection.query("select max(bill_no) as bill_no from bills",
+	 	 	  function (err_max_bill_no, result_max_bill_no, fields_query_max_bill_no) {
+	 	 		  if (err_query) throw err_query;
+
+					var bill_no = result_max_bill_no[0].bill_no;
+
+				  //Checks if the bill_no buyer is your user_no
+					while(bill_no > 0){
+						console.log(bill_no);
+						DB_config.connection.query("select buyer_id from bills where bill_no = ?",[bill_no],
+	 	 	 	    function (err_max_bill_no, result_max_bill_no, fields_query_max_bill_no) {
+	 	 	 		  if (err_query) throw err_query;
+
+						if(result_max_bill_no.length == 1){
+
+						if(result_max_bill_no[0].buyer_id == session.user_id){
+
+							//Current time
+							var current_time = moment().format("HH:mm:ss");
+
+							//We are assuming the transfer of electricity is 5v a second
+							var time_finished =  (Amt_KwH * 1000)/0.5;
+
+							//Gets the end time
+							var end_time =  moment().add(time_finished, 'seconds').format("HH:mm:ss");
+
+							//current_time = current_time.toString();
+						 //end_time = end_time.toString();
+             console.log(end_time);
+							DB_config.connection.query("insert into current_transactions(bill_no,start_time,end_time,KwH_transfer) values(?,?,?,?)",[bill_no,current_time,end_time,Amt_KwH],
+		 	 	 	    function (err_max_bill_no, result_max_bill_no, fields_query_max_bill_no) {
+		 	 	 		  if (err_query) throw err_query;
+						   });
+					    }
+						}
+
+	 	 	 	   });
+					 bill_no--;
+					 break;
+					}
+	 	 	   });
+
 
 	  if (result_query[0].Total_KwH === 0){
 			DB_config.connection.query("delete from sellers where sell_id = ?",[Sell_id],

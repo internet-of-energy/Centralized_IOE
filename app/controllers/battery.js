@@ -50,14 +50,17 @@ exports.current_transfer_JSON = function(req, res) {
 	 for(var i = 0; i < battery_info.length; i++){
 
 	 //Gets the current time.
-   var current_time = moment().format("HH:mm");
+   var current_time = moment().format("H:mm:ss");
+
+	 var cur_time_no_format = moment();
+
 	 //Gets the time finished.
-	 var time_finished = getTimeInterval_seconds(battery_info[i].start_time,current_time);
+	 var time_finished = getTimeInterval_seconds(battery_info[i].start_time,current_time,'12:00:00');
   //Finds how much of KwH is transferred.
-	 var Cur_KwH_transfer = time_finished * 5/1000;
+	 var Cur_KwH_transfer = time_finished * 0.5/1000;
 
    //Deletes record if the Current KwH > KwH required for transfer.
-	 if(Cur_KwH_transfer >= battery_info[i].No_of_KwH){
+	 if(Cur_KwH_transfer >= battery_info[i].KwH_transfer){
 
 		 DB_config.connection.query("delete from current_transactions where c_t_id = ?",
 		 [battery_info[i].c_t_id],function (err, battery_info, fields) {
@@ -69,10 +72,13 @@ exports.current_transfer_JSON = function(req, res) {
 
 	 //Or else appends some data.
 	  else{
-		 var percentage = Math.round((Cur_KwH_transfer/battery_info[i].No_of_KwH)*100);
+		 var percentage = Math.round((Cur_KwH_transfer/battery_info[i].KwH_transfer)*100);
 		battery_info[i].percentage = percentage;
 		battery_info[i].current_transfer = Cur_KwH_transfer;
-		battery_info[i].time_left = getTimeInterval(current_time,battery_info[i].end_time);
+		//battery_info[i].time_left = moment.utc(moment("HH:mm:ss")).diff(moment(battery_info[i].end_time,"HH:mm:ss")).format("HH:mm:ss");
+		//console.log(battery_info[i].time_left);
+		console.log(battery_info[i].end_time);
+    console.log(moment.utc(moment(moment().format(),"HH:mm:ss").diff(moment(battery_info[i].end_time,"HH:mm:ss"))).format("HH:mm:ss"));
   }
 }
     // Returns battery information
@@ -94,7 +100,7 @@ exports.battery_info = function(req, res) {
 
 	DB_config.connection.query("select * from battery_info where user_id = ?;select battery_id,sum(Total_KwH) as Total_KwH  from (select * from sellers where seller_id = ?) as sellers group by battery_id;",[session.user_id,session.user_id],
 	function (err_battery, result_battery, fields_battery) {
-    console.log(result_battery);
+
 		if (err_battery) throw err_battery;
 		//renders index page with certain data passed
 		res.json(result_battery);
@@ -109,21 +115,21 @@ exports.battery_info = function(req, res) {
 
 //To get time difference.
 function getTimeInterval(startTime, endTime, lunchTime){
-    var start = moment(startTime, "HH:mm");
-    var end = moment(endTime, "HH:mm");
+    var start = moment(startTime, "H:mm:ss");
+    var end = moment(endTime, "H:mm:ss");
     var minutes = end.diff(start, 'minutes');
     var interval = moment().hour(0).minute(minutes);
     interval.subtract(lunchTime, 'minutes');
-    return interval.format("hh:mm");
+    return interval.format("h:mm:ss");
 }
 //To get time difference in seconds
 function getTimeInterval_seconds(startTime, endTime, lunchTime){
-    var start = moment(startTime, "HH:mm");
-    var end = moment(endTime, "HH:mm");
-    var minutes = end.diff(start, 'minutes');
+    var start = moment(startTime, "H:mm:ss");
+    var end = moment(endTime, "H:mm:ss");
+    var minutes = end.diff(start, 'seconds');
     var interval = moment().minute(minutes);
-    interval.subtract(lunchTime, 'minutes');
-    return minutes*60;
+    interval.subtract(lunchTime, 'seconds');
+    return minutes;
 }
 
 

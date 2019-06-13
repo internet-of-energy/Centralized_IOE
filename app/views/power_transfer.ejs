@@ -52,7 +52,7 @@
 
                $("#latest_stat").append(`<div class="progress-box progress-1">
                      <h4 class="por-title"></h4>
-                     <div class="por-txt">`+data[i].current_transfer+`/`+data[i].No_of_KwH+` KwH (`+data[i].percentage+`%)</div>
+                     <div class="por-txt">`+data[i].current_transfer+`/`+data[i].KwH_transfer+` KwH (`+data[i].percentage+`%)</div>
                      <h1>`+data[i].time_left+`</h1>
                      <p>hours left</p>
                      <div class="progress mb-2" style="height: 7px;">
@@ -62,7 +62,7 @@
              }
            }
             }, dataType: "json"});
-         }, 1000);
+         }, 100);
 
 
 
