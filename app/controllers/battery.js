@@ -100,7 +100,9 @@ exports.battery_info = function(req, res) {
 
 		if (err_battery) throw err_battery;
 		//renders index page with certain data passed
+
 		res.json(result_battery);
+	  
 	});
 
 }
