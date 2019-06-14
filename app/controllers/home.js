@@ -131,12 +131,17 @@ exports.buy = function(req, res) {
 		 	 	 	    function (err_max_bill_no, result_max_bill_no, fields_query_max_bill_no) {
 		 	 	 		  if (err_query) throw err_query;
 						   });
+							 DB_config.connection.query("update battery_info set current_power = current_power + ? where battery_id = ?",[Amt_KwH,Battery_id],
+ 		 	 	 	     function (err_max_bill_no, result_max_bill_no, fields_query_max_bill_no) {
+ 		 	 	 		   if (err_query) throw err_query;
+ 						   });
 					    }
 						}
 
 	 	 	 	   });
 					 bill_no--;
-					 break;
+
+					 break; //Bug to be fixed later won't be issue for less users doing less transactions
 					}
 	 	 	   });
 

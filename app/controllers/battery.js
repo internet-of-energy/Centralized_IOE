@@ -75,10 +75,7 @@ exports.current_transfer_JSON = function(req, res) {
 		 var percentage = Math.round((Cur_KwH_transfer/battery_info[i].KwH_transfer)*100);
 		battery_info[i].percentage = percentage;
 		battery_info[i].current_transfer = Cur_KwH_transfer;
-		//battery_info[i].time_left = moment.utc(moment("HH:mm:ss")).diff(moment(battery_info[i].end_time,"HH:mm:ss")).format("HH:mm:ss");
-		//console.log(battery_info[i].time_left);
-		console.log(battery_info[i].end_time);
-    console.log(moment.utc(moment(moment().format(),"HH:mm:ss").diff(moment(battery_info[i].end_time,"HH:mm:ss"))).format("HH:mm:ss"));
+		battery_info[i].time_left = getTimeInterval(current_time,battery_info[i].end_time);
   }
 }
     // Returns battery information
@@ -115,12 +112,12 @@ exports.battery_info = function(req, res) {
 
 //To get time difference.
 function getTimeInterval(startTime, endTime, lunchTime){
-    var start = moment(startTime, "H:mm:ss");
-    var end = moment(endTime, "H:mm:ss");
-    var minutes = end.diff(start, 'minutes');
-    var interval = moment().hour(0).minute(minutes);
-    interval.subtract(lunchTime, 'minutes');
-    return interval.format("h:mm:ss");
+	var start = moment(startTime, "H:mm:ss");
+	var end = moment(endTime, "H:mm:ss");
+	var minutes = end.diff(start, 'seconds');
+	var interval = moment().minute(minutes);
+	interval.subtract(lunchTime, 'seconds');
+	return moment.utc(minutes*1000).format('HH:mm:ss');
 }
 //To get time difference in seconds
 function getTimeInterval_seconds(startTime, endTime, lunchTime){
