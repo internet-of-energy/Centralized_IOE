@@ -10,7 +10,8 @@ exports.home = function(req, res) {
 
 	var session = {
 		'user_id':req.session.user_id,
-		'username':req.session.username
+		'username':req.session.username,
+		'notification':req.session.notification
 	};
 
   /* Checks if session.username exsists. If not then redirects to the login page */
@@ -68,7 +69,8 @@ exports.buy = function(req, res) {
 
 	var session = {
 		'user_id':req.session.user_id,
-		'username':req.session.username
+		'username':req.session.username,
+		'notification':req.session.notification
 	};
 
 	//post request for buying
@@ -145,6 +147,8 @@ exports.buy = function(req, res) {
 					}
 	 	 	   });
 
+        //req.session.notification = req.session.notification + 1;
+				//console.log(req.session.notification);
 
 	  if (result_query[0].Total_KwH === 0){
 			DB_config.connection.query("delete from sellers where sell_id = ?",[Sell_id],

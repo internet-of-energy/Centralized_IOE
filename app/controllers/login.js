@@ -16,8 +16,9 @@ exports.check = function(req, res) {
 
 				req.session.user_id = result[0].user_id;
 				req.session.username = result[0].username;
+				req.session.notification = 0;
 
-				res.redirect('/home');
+				res.redirect('/home'); 
 			} else {
 				res.render('login.ejs',{error:"Wrong username and password"});
 			}

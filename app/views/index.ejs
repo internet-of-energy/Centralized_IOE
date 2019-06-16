@@ -184,7 +184,7 @@
 
             $("#battery_info").html("");
 
-           console.log(data.length);
+
 
             if(data.length == 1 && data[0] == null || data.length == 0){
             $("#battery_info").append("<h3>No Current Transactions left</h3>");
@@ -193,8 +193,16 @@
            else{
            for(var i = 0; i < data.length; i++){
 
-             var power_locked = data[1][i].Total_KwH;
-             var actual_power_left = data[0][i].Current_power;
+             var power_locked = 0;
+             var actual_power_left = 0;
+
+             //console.log(data[1].length);
+             if(data[1] != []){
+                //power_locked = data[1][i].Total_KwH;
+                //console.log(power_locked);
+             }
+              actual_power_left = data[0][i].Current_power;
+
              var per = Math.round((actual_power_left/data[0][i].Storage) * 100);
 
              $("#battery_info").append(`<div class="col-lg-3 col-md-6">
@@ -226,7 +234,7 @@
            }
          }
           }, dataType: "json"});
-       }, 100);
+       }, 200);
 
     //Sellers POST JSON converted to client side JS
     var sellers =<%-JSON.stringify(sellers)%>

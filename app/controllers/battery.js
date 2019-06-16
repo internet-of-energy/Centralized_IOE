@@ -12,8 +12,11 @@ exports.current_transfer = function(req, res) {
 
 	var session = {
 		'user_id':req.session.user_id,
-		'username':req.session.username
+		'username':req.session.username,
+		'notification':req.session.notification
 	};
+
+	req.session.notification = 0;
 
   if(req.session.username != null){
 	res.render('power_transfer.ejs',{session:session});
@@ -60,7 +63,7 @@ exports.current_transfer_JSON = function(req, res) {
 	 var Cur_KwH_transfer = time_finished * 0.5/1000;
 
    //Deletes record if the Current KwH > KwH required for transfer.
-	 if(Cur_KwH_transfer >= battery_info[i].KwH_transfer){
+	 if(Cur_KwH_transfer >= battery_info[i].KwH_transfer || Cur_KwH_transfer < 0){
 
 		 DB_config.connection.query("delete from current_transactions where c_t_id = ?",
 		 [battery_info[i].c_t_id],function (err, battery_info, fields) {
@@ -100,9 +103,9 @@ exports.battery_info = function(req, res) {
 
 		if (err_battery) throw err_battery;
 		//renders index page with certain data passed
-
+    console.log(result_battery);
 		res.json(result_battery);
-	  
+
 	});
 
 }
