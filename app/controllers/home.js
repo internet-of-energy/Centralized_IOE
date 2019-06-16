@@ -147,7 +147,7 @@ exports.buy = function(req, res) {
 					}
 	 	 	   });
 
-        //req.session.notification = req.session.notification + 1;
+        req.session.notification = req.session.notification + 1;
 				//console.log(req.session.notification);
 
 	  if (result_query[0].Total_KwH === 0){

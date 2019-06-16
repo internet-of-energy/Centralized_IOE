@@ -191,18 +191,21 @@
             }
 
            else{
-           for(var i = 0; i < data.length; i++){
+           for(var i = 0; i < data[0].length; i++){
 
              var power_locked = 0;
              var actual_power_left = 0;
 
-             //console.log(data[1].length);
-             if(data[1] != []){
-                //power_locked = data[1][i].Total_KwH;
-                //console.log(power_locked);
+             // Checks if the battery has locked power
+             if(data[1].length >= 1){
+                if(!(data[1].length <= i)){
+                  power_locked = data[1][i].Total_KwH;
+                }
              }
+
               actual_power_left = data[0][i].Current_power;
 
+            // Gets the percentage of the amount of charge left
              var per = Math.round((actual_power_left/data[0][i].Storage) * 100);
 
              $("#battery_info").append(`<div class="col-lg-3 col-md-6">
@@ -234,7 +237,7 @@
            }
          }
           }, dataType: "json"});
-       }, 200);
+       }, 2000);
 
     //Sellers POST JSON converted to client side JS
     var sellers =<%-JSON.stringify(sellers)%>
