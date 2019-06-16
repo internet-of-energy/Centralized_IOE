@@ -40,7 +40,7 @@ exports.current_transfer_JSON = function(req, res) {
 
 
    //Query to find nessary information about the current transactions (This query will have to be changed later).
-	 DB_config.connection.query("select * from current_transactions,bills,users where current_transactions.bill_no = bills.bill_no AND bills.buyer_id = users.user_id AND users.user_id = ?",
+	 DB_config.connection.query("select * from current_transactions,bills,users where current_transactions.bill_no = bills.bill_no AND bills.buyer_id = users.user_id AND users.user_id = ? order by c_t_id desc",
 	 [session.user_id],function (err, battery_info, fields) {
 
 	 if(battery_info.length == 0){
